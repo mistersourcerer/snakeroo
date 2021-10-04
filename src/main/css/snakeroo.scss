@@ -3,8 +3,16 @@ body {
 }
 
 .frame {
+  display: grid;
+  justify-items: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
 
   background-color: #f00;
+}
+
+#snakeroo {
+    width: 640px;
+    height: 480px;
 }
