@@ -1,8 +1,10 @@
 package engine
 
 import kotlinx.browser.window
+import org.w3c.dom.Image
+import kotlin.js.Promise
 
-class Game {
+class Game(val client: Client = DefaultClient()) {
     val startedAt: Double = now()
     var fps = 60
     var frameIntervalMS = (1000 / fps)
@@ -10,7 +12,6 @@ class Game {
     var debug = false
     var seeElapsed = false
     var stop = false
-    var client: Client = DefaultClient()
 
     private class DefaultClient : Client
     private var changed = false
@@ -33,7 +34,9 @@ class Game {
         val shouldRender = (current - lastRender) >= frameIntervalMS
         if(changed && shouldRender) render()
 
-        if(!stop) window.setTimeout(::loop, tickMS)
+        //if(!stop) window.setTimeout(::loop, tickMS)
+        // capping the frame rate
+        if(!stop) window.setTimeout(::loop, frameIntervalMS)
     }
 
     private fun now() : Double {
